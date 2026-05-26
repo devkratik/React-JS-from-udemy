@@ -49,11 +49,19 @@ const productData = [
 
 function App() {
   return (
-    <div>
+    //Using here extra layer of div is inefficient so we used react fragment below:
+
+    // <div>
+    //   <Header />
+    //   <Catalog />
+    //   <Footer />
+    // </div>
+
+    <>
       <Header />
       <Catalog />
       <Footer />
-    </div>
+    </>
   );
 }
 
@@ -107,6 +115,27 @@ function Catalog() {
   return (
     <main className="catalog">
       <ul className="products">
+        {productData.map((product) => {
+          return (
+            <Products
+              /* 
+            Passing multiple props here is inefficient
+              key={product.name}
+              name={product.name}
+              img={product.photoName}
+              description={product.description}
+              price={product.price}
+           */
+              key={product.name}
+              productObj={product}
+            />
+          );
+        })}
+
+        {/*
+        
+        Doing manually without any JS method will be less efficient
+        
         <Products
           name="Laptop Pro"
           description="High-performance laptop for professionals."
@@ -118,22 +147,48 @@ function Catalog() {
           img="/smartphone.png"
           price={800}
           description="Latest model with stunning display."
-        />
+        />*/}
       </ul>
     </main>
   );
 }
 
+/*
+
+Here we are not using any destructuring of props and it is inefficient
+
 function Products(props) {
-  console.log(props);
 
   return (
     <li className="product">
-      <img src={props.img} alt={props.name} />
+      <img src={props.productObj.photoName} alt={props.productObj.name} />
       <div>
-        <h3>{props.name}</h3>
-        <p>{props.description}</p>
-        <span>{props.price + 10}</span>
+        <h3>{props.productObj.name}</h3>
+        <p>{props.productObj.description}</p>
+        <span>{props.productObj.price + 10}</span>
+      </div>
+    </li>
+  );
+}
+*/
+
+function Products({ productObj }) {
+  // Declaring variable for destructuring is ineefficient too
+  //  const { productObj } = props;
+
+  // we could have also used 'if' to condtitionally render this:
+  // if(productObj.soldOut) return null;
+
+  return (
+    // Conditional Rendering below:
+    // !productObj.soldOut &&
+    <li className={`product ${productObj.soldOut ? "sold-out" : ""}`}>
+      <img src={productObj.photoName} alt={productObj.name} />
+      <div>
+        <h3>{productObj.name}</h3>
+        <p>{productObj.description}</p>
+        {/* <span>{productObj.price + 10}</span> */}
+        {<span>{productObj.soldOut ? "Sold out" : productObj.price + 10}</span>}
       </div>
     </li>
   );
