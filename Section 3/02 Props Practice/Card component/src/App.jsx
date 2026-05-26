@@ -58,16 +58,21 @@ function App() {
   return <CardContainer />;
 }
 
-function Card(props) {
+function Card({ item }) {
+  console.log(item);
   return (
-    <div className="card">
+    <div className={`card ${item.archived ? "archived" : ""} `}>
       <figure className="card__image">
-        <img className="card__image-content" src={props.img} alt="card-image" />
+        <img
+          className="card__image-content"
+          src={item.imageUrl}
+          alt="card-image"
+        />
       </figure>
-      <div className="card__title">{props.title}</div>
-      <div className="card__subtitle">{props.subtitle}</div>
-      <div className="card__time">{props.time}</div>
-      <CardTag tags={props.tags} />
+      <div className="card__title">{item.title}</div>
+      <div className="card__subtitle">{item.description}</div>
+      <div className="card__time">{item.time}</div>
+      <CardTag tags={item.tags} />
     </div>
   );
 }
@@ -76,25 +81,16 @@ function CardContainer() {
   return (
     <div className="card-container">
       {cardData.map((card) => {
-        return (
-          <Card
-            key={card.title}
-            img={card.imageUrl}
-            title={card.title}
-            subtitle={card.description}
-            time={card.date}
-            tags={card.tags}
-          />
-        );
+        return <Card key={card.title} item={card} />;
       })}
     </div>
   );
 }
 
-function CardTag(props) {
+function CardTag({ tags }) {
   return (
     <div className="card__tags">
-      {props.tags.map((tag) => {
+      {tags.map((tag) => {
         return (
           <p key={tag} className="card__tags-item">
             {tag}
