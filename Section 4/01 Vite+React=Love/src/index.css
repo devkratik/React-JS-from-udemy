@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+}
+
+body {
+  padding: 2rem;
+  background-color: #0b0909f0;
+  color: #fff;
+  font-family: "Lato", sans-serif;
+}
+
+.counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+  border: 1px solid #7300ff;
+  width: 100%;
+  max-width: 600px;
+  margin-inline: auto;
+  padding: 2rem;
+}
+
+.counter__value {
+  font-size: 3.2rem;
+  font-weight: 600;
+  background-color: #400b81;
+  padding: 0.4rem 1.6rem;
+  border-radius: 8px;
+}
+
+.counter__controls {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.2rem;
+}
+.counter__increase,
+.counter__decrease,
+.counter__reset {
+  padding: 0.8rem 1.6rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid #4c1da3;
+  border-radius: 6px;
+  color: #ffffff;
+}
+
+.btn {
+  transition: all ease 0.2s;
+  cursor: pointer;
+}
+
+.btn:hover {
+  box-shadow: 0px 2px 4px #7300ff;
+  transform: scale(1.02);
+}
+.btn:active {
+  box-shadow: none;
+  transform: scale(1);
+}
