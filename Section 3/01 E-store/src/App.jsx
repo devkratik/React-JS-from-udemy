@@ -1,4 +1,3 @@
-import React from "react";
 import "./index.css";
 
 // Array of product data with details about each product in the store
