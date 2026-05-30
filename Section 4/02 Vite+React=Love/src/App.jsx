@@ -3,12 +3,20 @@ import { useState } from "react";
 function App() {
   const [count, setCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState(null);
 
-  {
-    /* toggle open close function */
-  }
+  /* toggle open close function */
   function toggleIsOpen() {
     setIsOpen((prev) => !prev);
+  }
+
+  /*handdle mosue hover function*/
+  function handleMouseEnter(item) {
+    setActiveItem(item);
+  }
+  /*handdle mosue leave function*/
+  function handleMouseLeave(item) {
+    setActiveItem(null);
   }
 
   return (
@@ -32,7 +40,9 @@ function App() {
           <div className="container__logo">
             <figure className="logo">
               <img
-                className={`logo__vite ${count >= 1 ? "active" : ""} `}
+                onMouseEnter={() => handleMouseEnter("vite")}
+                onMouseLeave={handleMouseLeave}
+                className={`logo__vite ${count >= 1 || activeItem === "vite" ? "active" : ""} `}
                 src="/vite.svg"
                 alt="logo-vite"
               />
@@ -40,7 +50,9 @@ function App() {
             <p className="logo__connector">+</p>
             <figure className="logo">
               <img
-                className={`logo__react ${count >= 2 ? "active" : ""} `}
+                onMouseEnter={() => handleMouseEnter("react")}
+                onMouseLeave={handleMouseLeave}
+                className={`logo__react ${count >= 2 || activeItem === "react" ? "active" : ""} `}
                 src="/react.svg"
                 alt="logo-react"
               />
@@ -48,7 +60,9 @@ function App() {
             <p className="logo__connector">=</p>
             <figure className="logo">
               <img
-                className={`logo__love ${count >= 3 ? "active" : ""} `}
+                onMouseEnter={() => handleMouseEnter("love")}
+                onMouseLeave={handleMouseLeave}
+                className={`logo__love ${count >= 3 || activeItem === "love" ? "active" : ""} `}
                 src="/love.svg"
                 alt="logo-love"
               />
