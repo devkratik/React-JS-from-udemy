@@ -1,6 +1,8 @@
 // 1 - Create a state variable, isOpen, to control opening and closing the app. The interface is hidden when the close icon is clicked and shown when the Start button is pressed.
 // 2 - Implement functionality to display cards based on the currently active tab. Tabs can be switched either by clicking the Prev and Next buttons or by clicking directly on the tab itself.
 
+import { useState } from "react";
+
 // Card data with details for each card
 const cardData = [
   {
@@ -53,28 +55,84 @@ const tabData = [
 ];
 
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
+
+  function toggleIsOpen() {
+    setIsOpen((prev) => !prev);
+  }
+
+  function handlePrevTab() {
+    if (activeTab > 0) {
+      setActiveTab((prev) => prev - 1);
+    }
+  }
+  function handleNextTab() {
+    if (activeTab < tabData.length - 1) {
+      setActiveTab((prev) => prev + 1);
+    }
+  }
+
   return (
     <>
-      {/* <button className="btn start-btn">Start</button> */}
-      <div className="app">
-        <span className="app__close">&times;</span>
-        <h1 className="app__title">State Tabs Card Display</h1>
+      {isOpen ? (
+        ""
+      ) : (
+        <button onClick={toggleIsOpen} className="btn start-btn">
+          Start
+        </button>
+      )}
 
-        <div className="app__tabs">
-          <button className="btn app__tabs-btn active">Tab 1</button>
-          <button className="btn app__tabs-btn">Tab 2</button>
-          <button className="btn app__tabs-btn">Tab 3</button>
+      {isOpen && (
+        <div className="app">
+          <span onClick={toggleIsOpen} className="app__close">
+            &times;
+          </span>
+          <h1 className="app__title">State Tabs Card Display</h1>
+
+          <div className="app__tabs">
+            <button
+              onClick={() => setActiveTab(0)}
+              className={`btn app__tabs-btn ${activeTab === 0 ? "active" : ""}`}
+            >
+              Tab 1
+            </button>
+            <button
+              onClick={() => setActiveTab(1)}
+              className={`btn app__tabs-btn ${activeTab === 1 ? "active" : ""}`}
+            >
+              Tab 2
+            </button>
+            <button
+              onClick={() => setActiveTab(2)}
+              className={`btn app__tabs-btn ${activeTab === 2 ? "active" : ""}`}
+            >
+              Tab 3
+            </button>
+          </div>
+
+          <CardContainer cards={tabData[activeTab]} />
+
+          <div className="app__navigations">
+            <button
+              onClick={handlePrevTab}
+              disabled={activeTab === 0}
+              className="btn app__navigations-btn"
+            >
+              &lt; Previous
+            </button>
+            <button
+              onClick={handleNextTab}
+              disabled={activeTab === tabData.length - 1}
+              className="btn app__navigations-btn"
+            >
+              Next &gt;
+            </button>
+          </div>
+
+          <Footer />
         </div>
-
-        <CardContainer cards={tabData[0]} />
-
-        <div className="app__navigations">
-          <button className="btn app__navigations-btn">&lt; Previous</button>
-          <button className="btn app__navigations-btn">Next &gt;</button>
-        </div>
-
-        <Footer />
-      </div>
+      )}
     </>
   );
 }
